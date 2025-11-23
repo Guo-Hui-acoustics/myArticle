@@ -1,0 +1,13 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{def}\PYG{+w}{ }\PYG{n+nf}{active\PYGZus{}noise\PYGZus{}control}\PYG{p}{(}\PYG{n}{signal}\PYG{p}{,} \PYG{n}{noise}\PYG{p}{):}
+\PYG{+w}{    }\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{    ANC 核心算法模拟}
+\PYG{l+s+sd}{    \PYGZdq{}\PYGZdq{}\PYGZdq{}}
+    \PYG{n}{result} \PYG{o}{=} \PYG{p}{[]}
+    \PYG{k}{for} \PYG{n}{s}\PYG{p}{,} \PYG{n}{n} \PYG{o+ow}{in} \PYG{n+nb}{zip}\PYG{p}{(}\PYG{n}{signal}\PYG{p}{,} \PYG{n}{noise}\PYG{p}{):}
+        \PYG{c+c1}{\PYGZsh{} 生成反相声波}
+        \PYG{n}{anti\PYGZus{}noise} \PYG{o}{=} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1} \PYG{o}{*} \PYG{n}{n}
+        \PYG{c+c1}{\PYGZsh{} 叠加信号}
+        \PYG{n}{result}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{s} \PYG{o}{+} \PYG{n}{n} \PYG{o}{+} \PYG{n}{anti\PYGZus{}noise}\PYG{p}{)}
+    \PYG{k}{return} \PYG{n}{result}
+\end{Verbatim}

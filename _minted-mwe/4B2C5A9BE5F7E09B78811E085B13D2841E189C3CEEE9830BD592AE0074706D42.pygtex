@@ -1,0 +1,15 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{\PYGZbs{}begin}\PYG{n+nb}{\PYGZob{}}table\PYG{n+nb}{\PYGZcb{}}[hbt!]
+  \PYG{k}{\PYGZbs{}centering}
+  \PYG{k}{\PYGZbs{}caption}\PYG{n+nb}{\PYGZob{}}典型参数对比表\PYG{n+nb}{\PYGZcb{}}
+  \PYG{k}{\PYGZbs{}label}\PYG{n+nb}{\PYGZob{}}tab:example\PYG{n+nb}{\PYGZcb{}}
+  \PYG{k}{\PYGZbs{}begin}\PYG{n+nb}{\PYGZob{}}tabular\PYG{n+nb}{\PYGZcb{}\PYGZob{}}lcc\PYG{n+nb}{\PYGZcb{}}
+    \PYG{k}{\PYGZbs{}toprule}
+    参数名称 \PYG{n+nb}{\PYGZam{}} 符号 \PYG{n+nb}{\PYGZam{}} 数值 \PYG{k}{\PYGZbs{}\PYGZbs{}}
+    \PYG{k}{\PYGZbs{}midrule}
+    采样率 \PYG{n+nb}{\PYGZam{}} \PYG{l+s}{\PYGZdl{}}\PYG{n+nb}{f\PYGZus{}s}\PYG{l+s}{\PYGZdl{}} \PYG{n+nb}{\PYGZam{}} 16000 \PYG{k}{\PYGZbs{}\PYGZbs{}}
+    步长 \PYG{n+nb}{\PYGZam{}} \PYG{l+s}{\PYGZdl{}}\PYG{n+nv}{\PYGZbs{}mu}\PYG{l+s}{\PYGZdl{}} \PYG{n+nb}{\PYGZam{}} 0.01 \PYG{k}{\PYGZbs{}\PYGZbs{}}
+    \PYG{k}{\PYGZbs{}bottomrule}
+  \PYG{k}{\PYGZbs{}end}\PYG{n+nb}{\PYGZob{}}tabular\PYG{n+nb}{\PYGZcb{}}
+\PYG{k}{\PYGZbs{}end}\PYG{n+nb}{\PYGZob{}}table\PYG{n+nb}{\PYGZcb{}}
+\end{Verbatim}

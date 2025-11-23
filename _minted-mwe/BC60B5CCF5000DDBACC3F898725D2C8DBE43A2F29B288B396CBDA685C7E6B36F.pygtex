@@ -1,0 +1,7 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{\PYGZbs{}begin}\PYG{n+nb}{\PYGZob{}}listing\PYG{n+nb}{\PYGZcb{}}[H]
+  \PYG{k}{\PYGZbs{}begin}\PYG{n+nb}{\PYGZob{}}minted\PYG{n+nb}{\PYGZcb{}\PYGZob{}}python\PYG{n+nb}{\PYGZcb{}}
+    def active\PYG{n+nb}{\PYGZus{}}noise\PYG{n+nb}{\PYGZus{}}control(signal, noise):
+        \PYGZsh{} 简单的 ANC 算法示例
+        return [s + n \PYGZhy{} n for s, n in zip(signal, noise)]
+\end{Verbatim}
