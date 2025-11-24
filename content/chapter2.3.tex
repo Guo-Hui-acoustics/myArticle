@@ -1,0 +1,74 @@
+
+\subsection{行距与段落间距}
+        文字的垂直排列密度直接影响阅读的疲劳度。
+        过于紧密的行距会使视线迷失（难以换行），
+        而过于稀疏的行距则会割裂阅读的连续性。
+
+        在排版术语中，我们需要区分两个维度的垂直间距：
+        \begin{enumerate}[label=(\arabic*)]
+            \item \textbf{行距 (Line Spacing/Leading)}：
+            指相邻两行文字\textbf{基线}（Baseline）之间的垂直距离。
+            在 \TeX{} 底层，它由 \texttt{\textbackslash baselineskip} 控制。一般而言，正文行距设为字号的 1.2 至 1.5 倍最为适宜。例如，对于 10pt 的文字，12pt 的行距是标准设定（单倍行距），而 14.5pt 至 15pt 则能带来更宽松的阅读体验。
+            \item \textbf{段落间距 (Paragraph Spacing)}：
+            指前后两个段落之间的额外垂直空白。
+            在 \TeX{} 中，由 \texttt{\textbackslash parskip} 控制。学术排版通常存在两种流派：
+            \begin{itemize}
+                \item \textbf{缩进式 (Indented)}：段落首行缩进，段间无额外空行（传统书籍风格）。
+                \item \textbf{间距式 (Spaced)}：段落首行无缩进，段间增加空行（现代网页或商务文档风格）。
+            \end{itemize}
+        \end{enumerate}
+
+        \subsubsection{常用宏包与参数设定}
+        虽然我们可以通过暴力修改 \texttt{\textbackslash baselineskip} 来改变行距，
+        但这是一种“危险”的做法，
+        因为它会无差别地影响页眉、页脚、脚注甚至公式内部的间距。
+
+        \textbf{1. 行距的现代解决方案：\texttt{setspace} 宏包}
+
+        \texttt{setspace} 是管理行距的行业标准。
+        它能智能地只调整正文行距，而保持表格、脚注等元素的单倍行距，
+        避免排版混乱。
+
+        常用命令包括：
+        \begin{lstlisting}[language=TeX, caption={setspace 宏包的常用命令}]
+        \usepackage{setspace}
+        \singlespacing      % 单倍行距 (默认)
+        \onehalfspacing     % 1.5 倍行距
+        \doublespacing      % 2.0 倍行距
+        \setstretch{1.25}   % 自定义倍数
+        \end{lstlisting}
+
+        \textbf{2. 段落间距的解决方案}
+
+        如果需要“间距式”排版，
+        不建议直接修改 \texttt{\textbackslash parskip}，
+        推荐使用 \textbf{\texttt{parskip}} 宏包。
+        它会自动处理列表（List）和标题周围的垂直间距，
+        防止页面显得支离破碎。
+
+        \subsubsection{本模板的实现}
+        \texttt{myArticle.cls} 倾向于一种“易于批改和阅读”的草稿风格，
+        因此我们在保持传统缩进的同时，显著增加了行距。
+
+        \textbf{源码实现：}
+        \begin{lstlisting}[language=TeX]
+        % --- 2. 页面布局 (部分) ---
+        \RequirePackage{setspace}
+        \onehalfspacing 
+        \end{lstlisting}
+
+        \textbf{设计解析：}
+        \begin{enumerate}
+            \item \textbf{\texttt{\textbackslash onehalfspacing}}：
+            我们强制开启了 1.5 倍行距。
+            这在学术投稿（特别是初稿）中非常常见，
+            因为宽大的行间距为审稿人留出了手写批注的空间，
+            同时也降低了屏幕阅读时长文带来的视觉压力。
+            
+            \item \textbf{关于段落间距的取舍}：
+            本模板\textbf{未}引入 \texttt{parskip} 宏包，
+            也未修改 \texttt{\textbackslash parskip} 的默认值。
+            这意味着我们遵循 \LaTeX{} 标准文档类（article）的默认行为：\textbf{使用首行缩进来区分段落，段落之间没有额外的垂直空白}。
+            这种紧凑的段落处理方式与 1.5 倍的行距形成互补——行内宽松，段间紧凑，
+            维持了版面的灰度平衡。
+        \end{enumerate}

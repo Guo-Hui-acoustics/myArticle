@@ -1,0 +1,97 @@
+\subsection{页面布局}
+        页面布局（Page Layout）是排版设计的物理基础。
+        它的本质任务，是在有限的纸张范围内，
+        为不同类型的信息分配区域。
+
+        在 \TeX{} 排版系统中，页面并非一张随意的画板，
+        而是由无数个矩形“盒子”堆叠而成的严密结构——这被称为
+        \textbf{盒子模型}（Box Model）
+        \footnote{盒子模型：\TeX{} 系统的核心概念。
+        在 \TeX{} 眼中，无论是单个字母、一行文字还是整个段落，
+        本质上都是一个具有高度、宽度和深度的矩形盒子。
+        排版就是将这些盒子像积木一样拼在一起。}。
+
+        如图 \ref{fig:layout_simple}，
+            \begin{figure}[htbp]
+                \centering
+                \includegraphics[width=0.5\textwidth]{images/layout.png} 
+                \caption{页面布局的核心区块示意图}
+                \label{fig:layout_simple}
+            \end{figure}
+        一个典型的学术页面由以下四个核心区域组成：
+        \begin{enumerate}[label=(\arabic*)]
+            \item \textbf{版心 (Body)}：
+            这是页面最核心的区域，
+            承载了正文流（Main Galley）\footnote{正文流（Main Galley）：指尚未分页的、连续的正文内容。就像印刷厂里排在长托盘上的铅字，排版引擎会将其截断并填充到每一页的版心盒子中。}。
+            \begin{itemize}
+                \item 参数：\texttt{\textbackslash textwidth}（版心宽度）与 \texttt{\textbackslash textheight}（版心高度）。
+                这两个参数直接决定了每行能容纳多少字，以及每页能容纳多少行。
+            \end{itemize}
+            \item \textbf{页眉 (Header)}：
+            位于版心上方，通常用于放置章节标题或页码，起到导航作用。
+            \begin{itemize}
+                \item 参数：\texttt{\textbackslash headheight}（页眉盒子的高度）与 \texttt{\textbackslash headsep}（页眉底部到版心顶部的距离）。
+            \end{itemize}
+            \item \textbf{页脚 (Footer)}：
+            位于版心下方。
+            \begin{itemize}
+                \item 参数：\texttt{\textbackslash footskip}。
+                它定义了从版心底部\textbf{基线}（Baseline）\footnote{基线（Baseline）：西文排版中，字母“坐”着的那条看不见的线（例如字母 x 的底部所在的位置，而 p 的尾巴会垂在基线以下）。}到页脚基线的距离。
+            \end{itemize}
+            \item \textbf{边注区 (Margin Notes)}：
+            位于页面的\textbf{切口}（Fore-edge）\footnote{切口（Fore-edge）：书页翻开时，与书脊相对的外侧边缘。在单页文档中，通常指左右两侧的空白区域。}处。
+            \begin{itemize}
+                \item 参数：\texttt{\textbackslash marginparwidth}（边注盒子的宽度）与 \texttt{\textbackslash marginparsep}（边注与版心之间的安全距离）。
+            \end{itemize}
+        \end{enumerate}
+
+        \subsubsection{常用宏包与参数设定}
+        在 \LaTeX{} 的早期版本中，用户需要手动计算上述参数，
+        并修改底层的\textbf{长度寄存器}（Length Registers）
+        \footnote{长度寄存器：
+        \LaTeX{} 内部用于存储物理尺寸（如 10pt, 5cm, 1in）的变量容器。}。这不仅繁琐，而且极易出错（例如，如果左右边距相加超过纸张宽度，内容就会溢出纸面）。
+
+        如今，\textbf{\texttt{geometry}} 宏包已成为业界标准。
+        它提供了一套直观的“键值对”（Key-Value）接口，
+        自动处理底层复杂的坐标运算。
+
+        最典型的配置方式如下：
+        \begin{lstlisting}[language=TeX, caption={geometry 宏包的典型配置}]
+        \usepackage{geometry}
+        \geometry{
+            a4paper,           % 1. 设定物理纸张大小
+            left=2.54cm,        % 2. 设定可视边距
+            right=2.54cm,
+            top=1.91cm,
+            bottom=1.91cm
+        }
+        \end{lstlisting}
+        使用该宏包后，用户只需关心“我想留多少空白”，
+        而无需关心“版心具体多宽”，
+        宏包会自动根据公式 \textbf{版心宽度 = 纸张宽度 - (左边距 + 右边距)} 
+        进行反向计算。
+
+        \subsubsection{本模板的实现}
+        在 \texttt{myArticle.cls} 中，
+        我们采用了较为简单的配置策略，
+        力求在标准化的基础上最大化阅读舒适度。
+
+        \textbf{源码实现：}
+        \begin{lstlisting}[language=TeX]
+        % --- 2. 页面布局 ---
+        \RequirePackage[letterpaper,margin=1in]{geometry}
+        \end{lstlisting}
+
+        \textbf{设计解析：}
+        \begin{enumerate}[label=(\arabic*)]
+            \item \textbf{\texttt{letterpaper}}：
+            我们将纸张锁定为北美信纸尺寸（$8.5 \times 11$ 英寸）。这是绝大多数国际学术期刊（特别是 IEEE、AIAA 等）的默认物理载体。
+            
+            \item \textbf{\texttt{margin=1in}}：
+            这是一条快捷指令，它强制将上、下、左、右四个方向的留白统一设定为 1 英寸。
+            
+            \item \textbf{版心宽度的推导}：
+            在此配置下，版心的实际宽度为：
+            $$ 8.5 \text{in} - 1 \text{in} (\text{左}) - 1 \text{in} (\text{右}) = 6.5 \text{in} $$
+            配合 10pt 的字号，这能确保每行容纳约 70-80 个英文字符（CPL, Characters Per Line）。在排版心理学中，这是被公认为移动眼球最不易疲劳的“黄金阅读区间”。
+        \end{enumerate}

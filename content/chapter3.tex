@@ -1,0 +1,80 @@
+\section{参考文献管理}
+\label{sec:bibliography}
+
+在学术写作中，参考文献的规范性与正文同等重要。
+本模板采用经典的 \textbf{BibTeX} 引擎进行文献管理，
+实现了“内容与格式分离”的高效工作流。
+
+\subsection{基本格式与原理}
+传统的排版软件（如 Word）通常要求作者手动调整每一条参考文献的格式（如斜体、句号位置等）。
+而在 \LaTeX{} 中，
+我们只需维护一个结构化的数据库文件（\texttt{.bib}），
+格式渲染完全交给样式文件（\texttt{.bst}）处理。
+
+用户需要在一个独立的 \texttt{.bib} 文件中存储文献信息。
+每条文献由一个唯一的引用键（Key）标识。
+
+\textbf{示例（sample.bib）：}
+\begin{lstlisting}[language=TeX]
+@article{vatistas1986reverse,
+  title={Reverse Flow Radius in Vortex Chambers},
+  author={Vatistas, G H and Lin, S and Kwok, C K},
+  journal={AIAA Journal},
+  volume={24},
+  number={11},
+  pages={1872, 1873},
+  year={1986},
+  publisher={AIAA}
+}
+\end{lstlisting}
+在这个例子中，\textbf{key} 就是 \texttt{vatistas1986reverse}，
+作为我们在正文中引用参考文献的\textbf{标签}。
+
+\subsection{本模板的实现与接口}
+本模板旨在符合工程领域的严谨标准，因此在底层强绑定了 AIAA 的引用样式。
+
+\subsubsection{实现机制}
+在 \texttt{myArticle.cls} 中，我们通过以下核心代码配置了引用环境：
+
+\begin{lstlisting}[language=TeX]
+% --- 9. 引用与链接 ---
+\RequirePackage[sort&compress,numbers]{natbib}
+\bibliographystyle{new-aiaa}
+\renewcommand{\bibfont}{\small}
+\end{lstlisting}
+
+\textbf{代码解析：}
+\begin{enumerate}[label=(\arabic*)]
+    \item \textbf{\texttt{natbib} 宏包}：
+    加载了强大的 \texttt{natbib} 宏包，并开启了两个关键选项：
+    \begin{itemize}
+        \item \texttt{numbers}：强制使用数字引用风格（如 [1]），而非“作者-年份”风格。
+        \item \texttt{sort\&compress}：智能排序与压缩。例如，将分散的引用 [1, 3, 2] 自动整理为 [1-3]。
+    \end{itemize}
+    
+    \item \textbf{\texttt{new-aiaa} 样式}：
+    指定使用模板自带的 \texttt{new-aiaa.bst} 文件。该文件严格定义了 AIAA 期刊的排版规则（如期刊名缩写、年份位置等）。
+    
+    \item \textbf{字体调整}：
+    将参考文献列表的字号缩小为 \texttt{\textbackslash small}，这是学术界通用的做法，以区分正文与附录。
+\end{enumerate}
+
+\subsubsection{使用接口}
+用户在使用时无需关心复杂的格式定义，只需通过简单的命令即可完成调用。
+
+\textbf{1. 正文引用接口：}
+\begin{itemize}
+    \item \textbf{命令}：\texttt{\textbackslash cite\{Key\}}
+    \item \textbf{示例}：根据 Vatistas 的研究 \cite{vatistas1986reverse}...
+    \item \textbf{效果}：根据 Vatistas 的研究 [1]... （数字会自动变为\textcolor{green}{绿色}链接）
+\end{itemize}
+
+\textbf{2. 列表生成接口：}
+在文档末尾（\texttt{\textbackslash end\{document\}} 之前），使用以下命令生成列表：
+
+\begin{lstlisting}[language=TeX]
+\bibliography{sample}  % 指定 .bib 文件名（不带扩展名）
+\end{lstlisting}
+
+
+\textbf{注意}：未在正文中被引用的条目默认不会出现在列表中。如果需要列出所有文献（无论是否引用），可使用 \texttt{\textbackslash nocite\{*\}} 命令。

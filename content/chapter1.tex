@@ -1,0 +1,91 @@
+\section{用户接口与命令指南}
+    本模板对部分标准命令进行了扩展与预设，
+    请按照以下说明使用。
+
+    \subsection{姓名、单位与邮箱信息}
+    本模板集成了 \texttt{authblk} 宏包以增强作者信息的排版能力。
+
+    \begin{enumerate}[label=(\arabic*)]
+        \item \textbf{基本命令}：\texttt{\textbackslash author}、\texttt{\textbackslash affil} 及 \texttt{\textbackslash email}。
+        \item \textbf{排版输出}：使用 \texttt{\textbackslash maketitle} 生成整体标题块。
+        \item \textbf{完整示例}:
+            \begin{verbatim}
+            \title{My Research Title}
+            \author{San Zhang}
+            % 邮箱接口放到 \affil 内
+            \affil{Department of Physics, Xiamen University \email{sanzhang@example.com}}
+            \end{verbatim}
+    \end{enumerate}
+
+    \subsection{字体样式}
+    本模板预置了专业的英文字体（NewTX系列）
+    和中文字体支持（Fandol系列），
+    标准字体命令的效果如下：
+
+    \begin{table}[h]
+        \centering
+        \caption{字体命令与效果对照表}
+        \begin{tabular}{lll}
+            \toprule
+            \textbf{命令} & \textbf{说明} & \textbf{模板预设效果} \\
+            \midrule
+            \texttt{\textbackslash textbf\{...\}} & 加粗 & 英文为 Times 粗体，中文为黑体 \\
+            \texttt{\textbackslash textit\{...\}} & 斜体 & 英文为 Times 斜体，中文为楷体 \\
+            \texttt{\textbackslash texttt\{...\}} & 等宽 & 打字机字体 (常用于代码片段) \\
+            \texttt{\textbackslash textnormal\{...\}} & 正文 & 英文 Times Roman，中文宋体 \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+
+    \noindent \textbf{注意}：
+    模板已加载 \texttt{microtype} 宏包以优化字距，无需手动调整。
+
+    \subsection{代码块环境}
+    模板通过 \texttt{listings} 宏包预定义了代码块样式，
+    无需手动配置背景色或边框。
+
+    \begin{enumerate}[label=(\arabic*)]
+        \item \textbf{环境名称}: \texttt{lstlisting}
+        \item \textbf{预设参数}：
+        \begin{itemize}
+            \item \textbf{背景}：浅灰色 (\texttt{codebg}, gray!0.95)
+            \item \textbf{边框}：单实线框 (\texttt{frame=single})
+            \item \textbf{字体}：小号等宽字体 (\texttt{\textbackslash small\textbackslash ttfamily})
+            \item \textbf{行号}：默认关闭 (\texttt{numbers=none})
+            \item \textbf{高亮}：关键字蓝色，字符串红黑色，注释灰色
+        \end{itemize}
+        \item \textbf{使用示例}：
+            \begin{verbatim}
+            \begin{lstlisting}[language=Python, caption={Python示例}]
+                def main():
+                    print("Hello World")
+            \end{lstlisting}
+            \end{verbatim}
+    \end{enumerate}
+
+
+    \subsection{交叉引用与链接}
+    模板整合了 \texttt{natbib} 与 \texttt{hyperref}，
+    实现了自动化的引用格式与颜色管理。
+
+    \subsubsection{文献引用}
+    模板强制使用 AIAA (American Institute of Aeronautics and Astronautics) 样式，需配合提供的 \texttt{new-aiaa.bst} 文件使用。
+
+    \begin{itemize}
+        \item \textbf{命令}：\texttt{\textbackslash cite\{key\}}，\texttt{key}是参考文献内的关键字 \texttt{label}。
+        \item \textbf{效果}：生成绿色方括号数字，如 [1] 或 [1-3]。
+    \end{itemize}
+
+    \subsubsection{内部交叉引用}
+    支持标准的 \texttt{\textbackslash label} 和 \texttt{\textbackslash ref} 机制。
+
+    \begin{itemize}
+        \item \textbf{命令}：\texttt{\textbackslash ref\{sec:intro\}} 或 \texttt{\textbackslash nameref\{sec:intro\}}
+        \item \textbf{效果}：生成的引用编号（如 "Section 1"）自动附带蓝色超链接，点击可跳转。
+    \end{itemize}
+
+    \subsubsection{URL 链接}
+    \begin{itemize}
+        \item \textbf{命令}：\texttt{\textbackslash url\{...\}} 或 \texttt{\textbackslash href\{url\}\{text\}}
+        \item \textbf{效果}：链接文本显示为青色 (Cyan)。
+    \end{itemize}

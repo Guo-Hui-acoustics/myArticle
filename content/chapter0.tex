@@ -1,0 +1,106 @@
+\section{Quick Start}
+\label{sec:setup}
+    本章节将详细说明如何使用 \texttt{myArticle.cls} 文档类 / 模板。
+
+
+    \subsection{获取链接}
+    见 \url{https://github.com/Guo-Hui-acoustics/myArticle}
+
+
+    \subsection{文件组织}
+    本模板依赖于特定的文件结构来保证样式与功能的完整性。
+    为了确保文档能被正确编译，
+    您的工作目录下必须包含以下四个核心文件：
+    \begin{enumerate}[label=(\arabic*)]
+        \item \textbf{\texttt{myArticle.cls}}: \textbf{文档类文件，即模板。}
+        该文件定义了
+        页面的几何尺寸（Geometry）、
+        基于 \texttt{newtxtext} 的西文字体配置、
+        基于 \texttt{ctex} 的中文字体支持，
+        以及代码高亮（Listings）等视觉元素。
+        \item \textbf{\texttt{new-aiaa.bst}}: \textbf{参考文献样式文件。}
+        本模板的学术引用规范遵循 AIAA（美国航空航天学会）标准。
+        该 \texttt{.bst} 文件由 \texttt{natbib} 宏包调用，
+        负责控制参考文献列表的排序、标点以及缩写规则，
+        确保引用的专业性 。
+        \item \textbf{\texttt{sample.bib}}: \textbf{参考文献数据库示例。}
+        这是一个标准的 BibTeX 数据库文件，
+        其中包含了演示所需的文献条目，
+        如 Vatistas 等人的流体力学论文 \cite{vatistas1986reverse}，
+        用于验证引用功能的正确性。
+        \item \textbf{\texttt{main.tex}}: \textbf{您的内容写入本文件。}
+    \end{enumerate}
+    为了保证编写的高效明了，建议您采用如下的文件组织方式：
+    \begin{lstlisting}[language=bash, caption={推荐的项目文件组织结构}]
+    Project-Root/
+    ├── main.tex           % [核心] 主控文件，编译入口
+    ├── myArticle.cls      % [核心] 文档类定义
+    ├── new-aiaa.bst       % [核心] 参考文献样式
+    ├── sample.bib         % [核心] 参考文献数据库
+    ├── content/           % [文件夹] 存放各章节源码
+    │   ├── abstract.tex   % 摘要内容
+    │   └── chapter0.tex   % 第0章内容
+    └── images/            % [文件夹] 存放图片资源
+        └── fig1.png       % 示例图片
+    \end{lstlisting}
+
+
+    \subsection{最小工作示例}
+    为了快速验证环境是否配置正确，
+    并展示本模板的基本语法结构，
+    我们构建了一个最小工作示例（Minimum Working Example, MWE）。
+    该示例涵盖了元数据定义、版权声明注入以及正文引用的完整流程。
+    \begin{lstlisting}[language=TeX,caption={\texttt{myArticle} 模板的最小工作示例 (main.tex)}]
+    \documentclass{myArticle} 
+    % 0. 标题区信息填充
+    \title{排版入门：基于\texttt{myArticle.cls}模板}
+    %% 作者信息，包含姓名、单位、邮箱，按如下格式填充；
+    %% 多个作者直接按顺序向下补充即可
+    \author{Guo, H.}
+    \affil{College of Physical Science and Technology, Xiamen University \email{gh20222734@163.com}}
+    % 1. 正文
+    \begin{document}
+        % 1.1. 生成标题信息
+        \maketitle
+        % 1.2. 摘要生成（可选）
+        \input{content/abstract.tex}
+        % 1.3. 版权框 
+        \makecopyright
+        % 1.4. 目录——目录页不设置页码
+        \pagenumbering{gobble}  
+        \tableofcontents
+        \newpage  
+        % 1.5. 页码设置为阿拉伯数字，从 1 开始
+        \pagenumbering{arabic}         
+        \setcounter{section}{-1}
+        % 1.6. 正文内容插入
+        \input{content/chapter0.tex}
+        \newpage
+        % 1.7. 参考文献生成
+        \nocite{*}
+        \bibliography{sample}
+    \end{document}
+    \end{lstlisting}
+    
+
+    \subsection{编译方式}
+    由于 \texttt{myArticle.cls} 在底层调用了 \texttt{ctex} 宏包,
+    并指定了 \texttt{[fontset=fandol]} 选项 ，
+    为了获得最佳的中文支持与字体渲染效果，
+    \textbf{必须使用 XeLaTeX} 引擎进行编译。
+
+    为确保交叉引用（Cross-reference）和参考文献（Bibliography）都能正确生成，
+    建议的完整编译链条如下，
+    \begin{enumerate}[label=(\arabic*)]
+        \item 使用 \texttt{xelatex} 编译主文档（生成 \texttt{.aux} 辅助文件）；
+        \item 使用 \texttt{bibtex} 处理参考文献（读取 \texttt{new-aiaa.bst} 生成 \texttt{.bbl} 文件）；
+        \item 再次使用 \texttt{xelatex} 编译（将处理好的参考文献列表插入文档）；
+        \item 最后一次使用 \texttt{xelatex} 编译（修正所有的页码跳转与引用编号）。
+    \end{enumerate}
+
+    如果您使用 VS Code 配合 LaTeX Workshop 插件，
+    建议将默认的构建配方（Recipe）设置为 
+    \texttt{xelatex -> bibtex -> xelatex*2}。
+
+
+

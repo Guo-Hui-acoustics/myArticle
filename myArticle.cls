@@ -17,6 +17,7 @@
 \RequirePackage{microtype}
 \RequirePackage{newtxtext,newtxmath}
 \RequirePackage[scheme=plain, fontset=fandol]{ctex}
+\RequirePackage{enumitem}
 
 % --- 2. 页面布局 ---
 \RequirePackage[letterpaper,margin=1in]{geometry}
@@ -35,7 +36,7 @@
 This is an Open Access article distributed under the terms of the Creative Commons Attribution License (CC BY 4.0), which permits unrestricted use, distribution, and reproduction in any medium, provided the original work is properly cited.}
 \newcommand{\setcopyright}[1]{\renewcommand{\myCopyrightText}{#1}}
 \newcommand{\makecopyright}{%
-  \par\vspace{1.5em}
+  \par
   \noindent
   \hspace{\absleftindent}%
   \fbox{%
@@ -74,7 +75,7 @@ This is an Open Access article distributed under the terms of the Creative Commo
     breaklines=true,            % 自动换行
     captionpos=b,               % 标题在底部
     tabsize=4,
-    numbers=none,               % 显示行号
+    numbers=none,               % 不显示行号
     numberstyle=\tiny\color{gray},
     keywordstyle=\color{blue},  % 关键字颜色 (可选简单高亮)
     commentstyle=\color{gray},  % 注释颜色

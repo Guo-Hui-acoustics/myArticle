@@ -1,0 +1,72 @@
+\subsection{多级标题}
+        如果说页面布局构建了文档的空间，
+        那么多级标题（Headings）则构建了文档的逻辑。
+
+        在 \TeX{} 的设计哲学中，
+        标题不仅仅是加粗放大的文字，
+        它是文档结构的\textbf{锚点}（Anchor）。
+        多级标题通过字号（Size）、
+        字重（Weight）和垂直间距（Vertical Spacing）的变化，
+        建立起清晰的视觉层级（Visual Hierarchy）。
+        一个标准的学术文档通常包含以下三级核心结构：
+        \begin{enumerate}[label=(\arabic*)]
+            \item \textbf{Section（一级标题）}：划分主要的主题模块。
+            \item \textbf{Subsection（二级标题）}：阐述主题下的具体分支。
+            \item \textbf{Subsubsection（三级标题）}：针对具体技术细节的最小讨论单元。
+        \end{enumerate}
+
+        \subsubsection{常用宏包与参数设定}
+        原生 \LaTeX{} 的标题样式由 \texttt{article.cls} 定义，
+        通常被认为过于呆板且难以修改。
+        在现代排版中，\textbf{\texttt{titlesec}} 
+        宏包是定制标题样式的良好手段。
+
+        它提供了两个核心命令来控制标题的外观与间距：
+        \begin{enumerate}[label=(\arabic*)]
+            \item \textbf{\texttt{\textbackslash titleformat}}：控制“长什么样”。
+            \begin{lstlisting}[language=TeX, caption={titleformat 命令语法}]
+        \titleformat{<命令>}
+            [<形状>]          % 如 hang, block, display
+            {<格式>}          % 整体字体格式，如 \bfseries
+            {<标签>}          % 编号格式，如 \thesection
+            {<间隔>}          % 编号与标题文字之间的距离
+            {<前代码>}        % 标题文字前的代码
+            [<后代码>]        % (可选) 标题后的代码
+            \end{lstlisting}
+            
+            \item \textbf{\texttt{\textbackslash titlespacing}}：控制“位置在哪”。
+            \begin{lstlisting}[language=TeX, caption={titlespacing 命令语法}]
+        \titlespacing{<命令>}
+            {<左间距>}        % 左侧缩进
+            {<上间距>}        % 标题上方的垂直空白
+            {<下间距>}        % 标题下方的垂直空白
+            \end{lstlisting}
+        \end{enumerate}
+
+        \subsubsection{本模板的实现}
+        在 \texttt{myArticle.cls} 中，
+        我们利用 \texttt{titlesec} 宏包对标题进行了调整，
+        正文采用了 1.5 倍行距（One-half Spacing），
+        标题内部则恢复单倍行距，以避免多行标题显得松散。
+
+        \textbf{源码实现：}
+        \begin{lstlisting}[language=TeX]
+        % --- 7. 章节标题设置 ---
+        \RequirePackage[explicit]{titlesec}
+
+        % 一级标题设置
+        \titleformat{\section}
+            {\large\bfseries\singlespacing} % 1. 格式：大号、加粗、单倍行距
+            {\thesection\quad}              % 2. 标签：编号 + 1个全角空格
+            {0pt}                           % 3. 间隔：设为0，由标签自带的空格控制
+            {#1}                            % 4. 显式输出标题内容
+            []
+
+        \titlespacing{\section}{0pt}{0.5\baselineskip}{0pt}
+        \end{lstlisting}
+        
+        同理，二级（Subsection）和三级标题（Subsubsection）也遵循了相同的逻辑，
+        只是字号逐渐减小（\texttt{\textbackslash normalsize}），
+        以体现层级递减的视觉比重。
+
+        

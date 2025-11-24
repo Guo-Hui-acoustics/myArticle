@@ -1,0 +1,60 @@
+\subsection{字体配置}
+如果说布局是骨架，那么字体（Typeface）就是文档的皮肤。
+在学术排版中，
+字体的选择并非为了彰显个性，
+而是为了确保跨平台的一致性与长时间阅读的可读性。
+        
+在西文排版体系中，我们主要关注三大类字体：
+
+        \begin{enumerate}[label=(\arabic*)]
+            \item \textbf{衬线体 (Serif/Roman)}：
+            笔画起止处有装饰性的“脚”（Serif），笔画粗细有变化（如 Times New Roman, Garamond）。
+            \textbf{用途}：正文。衬线有助于引导视线水平移动，是长文阅读的最佳选择。这也是 IEEE, ACM, Springer 等主流学术出版商的强制要求。
+            
+            \item \textbf{无衬线体 (Sans Serif)}：
+            笔画粗细基本均等，无装饰脚（如 Arial, Helvetica）。
+            \textbf{用途}：标题、图表标注。因其结构清晰，醒目度高，常用于强调。
+            
+            \item \textbf{等宽字体 (Monospace/Typewriter)}：
+            每个字符占据相同的宽度（如 Courier, Consolas）。
+            \textbf{用途}：计算机代码、URL 链接、算法伪代码。
+        \end{enumerate}
+
+        \subsubsection{常用实现方案}
+        \LaTeX{} 默认使用的字体是 \textbf{Computer Modern (CM)}。虽然经典，但它有两个显著问题：
+        \begin{enumerate}[label=(\arabic*)]
+            \item \textbf{太细}：在低分辨率屏幕或某些打印机上，CM 字体显得过于纤细，缺乏力量感。
+            \item \textbf{风格不符}：大多数工程与自然科学期刊（尤其是航空航天与电子类）更偏爱 \textbf{Times} 风格的字体，因为 Times 比 CM 更节省版面空间，且显得更为紧凑严谨。
+        \end{enumerate}
+
+        传统的解决方案是使用 \texttt{mathptmx} 宏包，但它对数学符号的支持非常有限（例如缺少粗体数学符号）。现代排版的最佳实践是使用 \textbf{\texttt{newtx}} 系列宏包，它不仅重构了文本字体，还提供了与 Times 风格完美匹配的数学字库。
+
+        \subsubsection{本模板的实现}
+        \texttt{myArticle.cls} 采用了“西文 Times + 中文宋体”的经典组合，这是一种“无需思考但绝对正确”的配置。
+
+        \textbf{源码实现：}
+        \begin{lstlisting}[language=TeX]
+        % --- 1. 基础宏包 ---
+        \RequirePackage[T1]{fontenc}
+        \RequirePackage{newtxtext,newtxmath}
+        \RequirePackage[scheme=plain, fontset=fandol]{ctex}
+        \end{lstlisting}
+
+        \textbf{解析：}
+        \begin{enumerate}[label=(\arabic*)]
+            \item \textbf{\texttt{newtxtext}}：
+            加载基于 TeX Gyre Termes 的正文字体。这是一款高质量的 Times Roman 替代品，它比标准的 Times New Roman 具有更丰富的字重（加粗）和变体。
+            
+            \item \textbf{\texttt{newtxmath}}：
+            这是本模板的精华所在。大多数 Word 用户常犯的错误是：正文用 Times，公式却保留了默认字体（Latin Modern），导致视觉割裂。
+            \texttt{newtxmath} 宏包强制将所有的数学符号（希腊字母 $\alpha, \beta$、积分号 $\int$ 等）替换为 Times 风格。请观察公式 $E=mc^2$ 或 $\sum_{i=0}^{n} x_i$，它们的笔触与正文完美融合，浑然一体。
+            
+            \item \textbf{\texttt{ctex} 与 \texttt{fandol}}：
+            \begin{itemize}
+                \item \texttt{scheme=plain}：告诉 \texttt{ctex} 宏包“只提供中文支持，不要擅自修改我的字号和标题格式”，从而把控制权留给了我们自己定义的 \texttt{geometry} 和 \texttt{titlesec}。
+                \item \texttt{fontset=fandol}：指定使用开源的 Fandol 字体集（FandolSong, FandolHei 等）。这是 \TeX Live 发行版自带的字体，意味着用户\textbf{无需安装任何额外字体}即可在 Windows, Mac 或 Linux 上编译出完全一致的效果。
+            \end{itemize}
+        \end{enumerate}
+
+
+

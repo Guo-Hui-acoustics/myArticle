@@ -7,9 +7,6 @@
   \providecommand{\doi}[1]{\discretionary{}{}{}https://doi.org/#1}\else
   \providecommand{\doi}[1]{\discretionary{}{}{}\urlstyle{rm}\url{https://doi.org/#1}}\fi
 
-\bibitem[{Peyret and Taylor(1983)}]{peyret2012computational}
-Peyret, R., and Taylor, T.~D., \emph{Computational Methods for Fluid Flow}, 2\textsuperscript{nd} ed., Springer-Verlag, New York, 1983, Chaps. 7, 14.
-
 \bibitem[{Vatistas et~al.(1986)Vatistas, Lin, and Kwok}]{vatistas1986reverse}
 Vatistas, G.~H., Lin, S., and Kwok, C.~K., \enquote{Reverse Flow Radius in Vortex Chambers,} \emph{AIAA Journal}, Vol.~24, No.~11, 1986, pp. 1872, 1873.
 \newblock \doi{10.2514/3.13046}.
@@ -19,6 +16,9 @@ Dornheim, M.~A., \enquote{Planetary Flight Surge Faces Budget Realities,} \emph{
 
 \bibitem[{Terster(1997)}]{terster1997nasa}
 Terster, W., \enquote{NASA Considers Switch to Delta 2,} \emph{Space News}, Vol.~8, No.~2, 1997, pp. 13--19.
+
+\bibitem[{Peyret and Taylor(1983)}]{peyret2012computational}
+Peyret, R., and Taylor, T.~D., \emph{Computational Methods for Fluid Flow}, 2\textsuperscript{nd} ed., Springer-Verlag, New York, 1983, Chaps. 7, 14.
 
 \bibitem[{Oates(1984)}]{oates1997aerothermodynamics}
 Oates, G.~C. (ed.), \emph{Aerothermodynamics of Gas Turbine and Rocket Propulsion}, AIAA Education Series, AIAA, New York, 1984, pp. 19, 136.
